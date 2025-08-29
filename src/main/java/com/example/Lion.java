@@ -2,31 +2,39 @@ package com.example;
 
 import java.util.List;
 
-public class Lion {
+    public class Lion {
+        private final boolean hasMane;
+        private final Feline feline;
 
-    boolean hasMane;
+        public Lion(String sex, Feline feline) {
+            if (sex == null) {
+                throw new NullPointerException("Пол не может быть null");
+            }
+            if (feline == null) {
+                throw new NullPointerException("Feline не может быть null");
+            }
 
-    public Lion(String sex) throws Exception {
-        if ("Самец".equals(sex)) {
-            hasMane = true;
-        } else if ("Самка".equals(sex)) {
-            hasMane = false;
-        } else {
-            throw new Exception("Используйте допустимые значения пола животного - самей или самка");
+            this.feline = feline;
+
+            if ("самец".equalsIgnoreCase(sex)) {
+                hasMane = true;
+            } else if ("самка".equalsIgnoreCase(sex)) {
+                hasMane = false;
+            } else {
+                throw new IllegalArgumentException("Используйте допустимые значения пола животного - самец или самка");
+            }
+        }
+
+        public int getKittens() {
+            return feline.getKittens();
+        }
+
+        public boolean doesHaveMane() {
+            return hasMane;
+        }
+
+        public List<String> getFood() throws Exception {
+            return feline.getFood("Хищник");
         }
     }
 
-    Feline feline = new Feline();
-
-    public int getKittens() {
-        return feline.getKittens();
-    }
-
-    public boolean doesHaveMane() {
-        return hasMane;
-    }
-
-    public List<String> getFood() throws Exception {
-        return feline.getFood("Хищник");
-    }
-}
