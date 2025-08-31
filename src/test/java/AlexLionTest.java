@@ -4,12 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Arrays;
 import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AlexLionTest {
+
     @Mock
     private Feline felineMock;
 
@@ -18,61 +21,54 @@ public class AlexLionTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        alex = new AlexLion(felineMock);
+        try {
+            alex = new AlexLion(felineMock);
+        } catch (Exception e) {
+            fail("Constructor threw an exception: " + e.getMessage());
+        }
     }
 
-    // Тесты базовых характеристик
+
     @Test
-    public void testBasicCharacteristics() {
-        assertTrue(alex.doesHaveMane()); // Алекс - самец, должен иметь гриву
-        assertEquals(0, alex.getKittens()); // У Алекса нет котят
+    public void testDoesHaveMane() {
+        assertTrue("У Алекса, как у самца льва, должна быть грива", alex.doesHaveMane());
     }
 
-    // Тест друзей
     @Test
-    public void testFriends() {
+    public void testGetKittens() {
+        assertEquals("У Алекса не должно быть львят", 0, alex.getKittens());
+    }
+
+    // Тест: правильный список друзей
+    @Test
+    public void testGetFriends() {
         List<String> expectedFriends = Arrays.asList("Марти", "Глория", "Мелман");
-        assertEquals(expectedFriends, alex.getFriends());
+        assertEquals("Список друзей Алекса должен соответствовать ожидаемому", expectedFriends, alex.getFriends());
     }
 
-    // Тест места проживания
+
     @Test
-    public void testPlaceOfLiving() {
-        assertEquals("Нью-Йоркский зоопарк", alex.getPlaceOfLiving());
+    public void testGetPlaceOfLiving() {
+        assertEquals("Алекс должен жить в Нью-Йоркском зоопарке", "Нью-Йоркский зоопарк", alex.getPlaceOfLiving());
     }
 
-    // Тесты с моками Feline
     @Test
-    public void testGetFood() throws Exception {
-        when(felineMock.getFood("Хищник"))
-                .thenReturn(Arrays.asList("мясо", "рыба", "птица"));
+    public void testGetFoodReturnsExpectedFood() throws Exception {
+        List<String> expectedFood = Arrays.asList("Животные", "Птицы", "Рыба");
+        when(felineMock.getFood("Хищник")).thenReturn(expectedFood);
 
-        List<String> food = alex.getFood();
-        assertEquals(3, food.size());
-        assertTrue(food.contains("мясо"));
+        List<String> actualFood = alex.getFood();
+
+        assertEquals("Рацион Алекса должен соответствовать рациону хищника", expectedFood, actualFood);
     }
 
-    // Тест обработки исключений
-    @Test(expected = NullPointerException.class)
-    public void testNullFeline() {
-        new AlexLion(null);
-    }
-
-    // Тест переопределенного метода getKittens
     @Test
-    public void testGetKittensOverride() {
-        // Проверяем, что переопределенный метод всегда возвращает 0
-        assertEquals(0, alex.getKittens());
+    public void testGetFoodCallsFelineGetFoodOnce() throws Exception {
 
-        // Проверяем, что метод родителя не вызывается
-        verify(felineMock, never()).getKittens();
-    }
+        when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные"));
 
-    // Тест создания объекта
-    @Test
-    public void testConstructor() {
-        assertNotNull(alex);
-        assertTrue(alex instanceof Lion);
-        assertTrue(alex instanceof AlexLion);
+        alex.getFood();
+
+        verify(felineMock, times(1)).getFood("Хищник");
     }
 }

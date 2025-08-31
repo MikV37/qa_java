@@ -34,14 +34,11 @@ public class CatTest {
 
     @Test
     public void testGetFood() throws Exception {
-        // Задаем ожидаемый результат для метода eatMeat
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(felineMock.eatMeat()).thenReturn(expectedFood);
 
-        // Получаем еду от кошки
         List<String> actualFood = cat.getFood();
 
-        // Проверяем результат
         assertEquals(expectedFood, actualFood);
     }
 

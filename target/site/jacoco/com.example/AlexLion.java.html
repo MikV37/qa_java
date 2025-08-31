@@ -4,30 +4,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AlexLion extends Lion {
-    // Друзья Алекса
-<span class="fc" id="L8">    private static final List&lt;String&gt; FRIENDS = Arrays.asList(&quot;Марти&quot;, &quot;Глория&quot;, &quot;Мелман&quot;);</span>
+<span class="fc" id="L7">    private static final List&lt;String&gt; FRIENDS = Arrays.asList(&quot;Марти&quot;, &quot;Глория&quot;, &quot;Мелман&quot;);</span>
     private static final String PLACE_OF_LIVING = &quot;Нью-Йоркский зоопарк&quot;;
 
-    // Конструктор, передаем фиксированные значения для Алекса
-    public AlexLion(Feline feline) {
-        // Вызываем конструктор родителя с параметрами &quot;самец&quot; и переданный Feline
-<span class="fc" id="L14">        super(&quot;самец&quot;, feline);</span>
-<span class="fc" id="L15">    }</span>
+    public AlexLion(Feline feline) throws Exception {
+<span class="fc" id="L11">        super(&quot;Самец&quot;, feline);</span>
+<span class="fc" id="L12">    }</span>
 
-    // Метод для получения списка друзей
     public List&lt;String&gt; getFriends() {
-<span class="fc" id="L19">        return FRIENDS;</span>
+<span class="fc" id="L15">        return FRIENDS;</span>
     }
 
-    // Метод для получения места проживания
     public String getPlaceOfLiving() {
-<span class="fc" id="L24">        return PLACE_OF_LIVING;</span>
+<span class="fc" id="L19">        return PLACE_OF_LIVING;</span>
     }
 
-    // Переопределяем метод getKittens(), так как у Алекса нет котят
     @Override
     public int getKittens() {
-<span class="fc" id="L30">        return 0; // У Алекса нет львят</span>
+<span class="fc" id="L24">        return super.getKittens();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

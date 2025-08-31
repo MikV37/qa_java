@@ -4,12 +4,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
-import java.util.Collection;  // Добавляем импорт Collection
+import java.util.Collection;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class LionParamTest {
@@ -27,20 +28,23 @@ public class LionParamTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        lion = new Lion(sex, felineMock);
-    }
-
-    @Parameters
-    public static Collection<Object[]> data() {  // Исправляем Object на Object[]
-        return Arrays.asList(new Object[][]{
-                {"самец", true},
-                {"самка", false}
-        });
+        try {
+            this.lion = new Lion(sex, felineMock);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @org.junit.Test
     public void testConstructor() {
         Assert.assertEquals(expectedMane, lion.doesHaveMane());
     }
-}
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {"Самец", true},
+                {"Самка", false}
+        });
+    }
+}

@@ -15,19 +15,16 @@ public class FelineTest {
 
     @Before
     public void setUp() {
-        // Создаем экземпляр Feline без лишних моков
         feline = new Feline();
     }
 
     @Test
     public void testGetFamily() {
-        // Проверяем, что метод возвращает правильное семейство
         assertEquals("Кошачьи", feline.getFamily());
     }
 
     @Test
     public void testEatMeat() throws Exception {
-        // Проверяем, что метод возвращает правильный список еды
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         List<String> actualFood = feline.eatMeat();
 
@@ -36,13 +33,11 @@ public class FelineTest {
 
     @Test
     public void testGetKittensDefault() {
-        // Проверяем значение по умолчанию для котят
         assertEquals(1, feline.getKittens());
     }
 
     @Test
     public void testGetKittensWithCount() {
-        // Проверяем, что метод корректно возвращает переданное количество котят
         int kittensCount = 3;
         assertEquals(kittensCount, feline.getKittens(kittensCount));
     }
